@@ -1,0 +1,196 @@
+{
+  "configurations": {
+    "quick_test": {
+      "description": "Quick test on small model (5 min)",
+      "model_name": "facebook/opt-350m",
+      "quantization_methods": ["raw", "awq", "pot", "apot"],
+      "calibration_dataset": "wikitext",
+      "calibration_dataset_config": "wikitext-2-raw-v1",
+      "calibration_split": "validation",
+      "test_dataset": "wikitext",
+      "test_dataset_config": "wikitext-2-raw-v1",
+      "test_split": "test",
+      "n_calibration_samples": 32,
+      "calibration_block_size": 256,
+      "n_test_samples": 10,
+      "test_block_size": 512,
+      "quantization_config": {
+        "awq": {
+          "w_bit": 4,
+          "q_group_size": 128,
+          "protect_ratio": 0.01,
+          "scale_factor": 2.0
+        },
+        "gptq": {
+          "w_bit": 4,
+          "q_group_size": 128,
+          "perp_damp": 0.01,
+          "blocksize": 128,
+          "nsamples": 32,
+          "actorder": false
+        },
+        "pot": {
+          "w_bit": 4,
+          "q_group_size": 128,
+          "grid_search_range": [0.01, 2.01],
+          "grid_step": 0.1
+        },
+        "apot": {
+          "w_bit": 4,
+          "q_group_size": 128,
+          "k": 2,
+          "grid_search_range": [0.01, 2.01],
+          "grid_step": 0.1
+        }
+      },
+      "device_map": "auto",
+      "torch_dtype": "float16",
+      "use_fast_tokenizer": false,
+      "verbose": true
+    },
+    "comprehensive_benchmark": {
+      "description": "Full benchmark on OPT-1.3B (30+ min)",
+      "model_name": "facebook/opt-1.3b",
+      "quantization_methods": ["raw", "awq", "gptq", "pot", "apot"],
+      "calibration_dataset": "wikitext",
+      "calibration_dataset_config": "wikitext-2-raw-v1",
+      "calibration_split": "validation",
+      "test_dataset": "wikitext",
+      "test_dataset_config": "wikitext-2-raw-v1",
+      "test_split": "test",
+      "n_calibration_samples": 256,
+      "calibration_block_size": 512,
+      "n_test_samples": 40,
+      "test_block_size": 2048,
+      "quantization_config": {
+        "awq": {
+          "w_bit": 3,
+          "q_group_size": 128,
+          "protect_ratio": 0.01,
+          "scale_factor": 2.0
+        },
+        "gptq": {
+          "w_bit": 4,
+          "q_group_size": 128,
+          "perp_damp": 0.01,
+          "blocksize": 128,
+          "nsamples": 128,
+          "actorder": false
+        },
+        "pot": {
+          "w_bit": 4,
+          "q_group_size": 128,
+          "grid_search_range": [0.01, 2.01],
+          "grid_step": 0.01
+        },
+        "apot": {
+          "w_bit": 4,
+          "q_group_size": 128,
+          "k": 2,
+          "grid_search_range": [0.01, 2.01],
+          "grid_step": 0.05
+        }
+      },
+      "device_map": "auto",
+      "torch_dtype": "float16",
+      "use_fast_tokenizer": false,
+      "verbose": true
+    },
+    "extreme_compression": {
+      "description": "Extreme compression test (2-bit quantization)",
+      "model_name": "facebook/opt-350m",
+      "quantization_methods": ["raw", "pot", "apot"],
+      "calibration_dataset": "wikitext",
+      "calibration_dataset_config": "wikitext-2-raw-v1",
+      "calibration_split": "validation",
+      "test_dataset": "wikitext",
+      "test_dataset_config": "wikitext-2-raw-v1",
+      "test_split": "test",
+      "n_calibration_samples": 128,
+      "calibration_block_size": 512,
+      "n_test_samples": 20,
+      "test_block_size": 1024,
+      "quantization_config": {
+        "pot": {
+          "w_bit": 2,
+          "q_group_size": 64,
+          "grid_search_range": [0.01, 2.01],
+          "grid_step": 0.05
+        },
+        "apot": {
+          "w_bit": 2,
+          "q_group_size": 64,
+          "k": 1,
+          "grid_search_range": [0.01, 2.01],
+          "grid_step": 0.05
+        }
+      },
+      "device_map": "auto",
+      "torch_dtype": "float16",
+      "use_fast_tokenizer": false,
+      "verbose": true
+    },
+    "awq_focus": {
+      "description": "Focus on AWQ with different protect ratios",
+      "model_name": "facebook/opt-350m",
+      "quantization_methods": ["raw", "awq"],
+      "calibration_dataset": "wikitext",
+      "calibration_dataset_config": "wikitext-2-raw-v1",
+      "calibration_split": "validation",
+      "test_dataset": "wikitext",
+      "test_dataset_config": "wikitext-2-raw-v1",
+      "test_split": "test",
+      "n_calibration_samples": 128,
+      "calibration_block_size": 512,
+      "n_test_samples": 15,
+      "test_block_size": 1024,
+      "quantization_config": {
+        "awq": {
+          "w_bit": 4,
+          "q_group_size": 128,
+          "protect_ratio": 0.01,
+          "scale_factor": 2.0
+        }
+      },
+      "device_map": "auto",
+      "torch_dtype": "float16",
+      "use_fast_tokenizer": false,
+      "verbose": true
+    },
+    "pot_grid_search": {
+      "description": "POT with fine-grained grid search",
+      "model_name": "facebook/opt-350m",
+      "quantization_methods": ["raw", "pot"],
+      "calibration_dataset": "wikitext",
+      "calibration_dataset_config": "wikitext-2-raw-v1",
+      "calibration_split": "validation",
+      "test_dataset": "wikitext",
+      "test_dataset_config": "wikitext-2-raw-v1",
+      "test_split": "test",
+      "n_calibration_samples": 96,
+      "calibration_block_size": 512,
+      "n_test_samples": 15,
+      "test_block_size": 1024,
+      "quantization_config": {
+        "pot": {
+          "w_bit": 4,
+          "q_group_size": 128,
+          "grid_search_range": [0.5, 2.5],
+          "grid_step": 0.01
+        }
+      },
+      "device_map": "auto",
+      "torch_dtype": "float16",
+      "use_fast_tokenizer": false,
+      "verbose": true
+    }
+  },
+  "instructions": {
+    "quick_test": "python benchmark_runner.py config.json  # After setting model to facebook/opt-350m",
+    "comprehensive": "python benchmark_runner.py config.json  # After setting model to facebook/opt-1.3b",
+    "extreme": "python benchmark_runner.py config.json  # 2-bit quantization testing",
+    "awq_only": "python benchmark_runner.py config.json  # Focus on AWQ method",
+    "pot_grid": "python benchmark_runner.py config.json  # POT with fine-grained search"
+  }
+}
+

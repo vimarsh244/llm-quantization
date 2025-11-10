@@ -1,0 +1,58 @@
+{
+  "model_name": "TinyLlama/TinyLlama_v1.1",
+  "quantization_methods": [
+    "awq",
+    "gptq",
+    "pot",
+    "apot"
+  ],
+  "calibration_dataset": "wikitext",
+  "calibration_dataset_config": "wikitext-2-raw-v1",
+  "calibration_split": "validation",
+  "test_dataset": "wikitext",
+  "test_dataset_config": "wikitext-2-raw-v1",
+  "test_split": "test",
+  "n_calibration_samples": 32,
+  "calibration_block_size": 512,
+  "n_test_samples": 10,
+  "test_block_size": 1024,
+  "quantization_config": {
+    "awq": {
+      "w_bit": 8,
+      "q_group_size": 128,
+      "protect_ratio": 0.01,
+      "scale_factor": 2.0
+    },
+    "gptq": {
+      "w_bit": 8,
+      "q_group_size": 128,
+      "perp_damp": 0.01,
+      "blocksize": 128,
+      "nsamples": 32,
+      "actorder": false
+    },
+    "pot": {
+      "w_bit": 8,
+      "q_group_size": 128,
+      "grid_search_range": [
+        0.01,
+        2.01
+      ],
+      "grid_step": 0.1
+    },
+    "apot": {
+      "w_bit": 8,
+      "q_group_size": 128,
+      "k": 4,
+      "grid_search_range": [
+        0.01,
+        2.01
+      ],
+      "grid_step": 0.1
+    }
+  },
+  "device_map": "auto",
+  "torch_dtype": "float16",
+  "use_fast_tokenizer": false,
+  "verbose": true
+}

@@ -1,0 +1,142 @@
+{
+  "timestamp": "2025-11-10T17:06:46.514634",
+  "config": {
+    "model_name": "TinyLlama/TinyLlama_v1.1",
+    "quantization_methods": [
+      "awq",
+      "gptq",
+      "pot",
+      "apot"
+    ],
+    "calibration_dataset": "wikitext",
+    "calibration_dataset_config": "wikitext-2-raw-v1",
+    "calibration_split": "validation",
+    "test_dataset": "wikitext",
+    "test_dataset_config": "wikitext-2-raw-v1",
+    "test_split": "test",
+    "n_calibration_samples": 32,
+    "calibration_block_size": 512,
+    "n_test_samples": 10,
+    "test_block_size": 1024,
+    "quantization_config": {
+      "awq": {
+        "w_bit": 8,
+        "q_group_size": 128,
+        "protect_ratio": 0.01,
+        "scale_factor": 2.0
+      },
+      "gptq": {
+        "w_bit": 8,
+        "q_group_size": 128,
+        "perp_damp": 0.01,
+        "blocksize": 128,
+        "nsamples": 32,
+        "actorder": false
+      },
+      "pot": {
+        "w_bit": 8,
+        "q_group_size": 128,
+        "grid_search_range": [
+          0.01,
+          2.01
+        ],
+        "grid_step": 0.1
+      },
+      "apot": {
+        "w_bit": 8,
+        "q_group_size": 128,
+        "k": 4,
+        "grid_search_range": [
+          0.01,
+          2.01
+        ],
+        "grid_step": 0.1
+      }
+    },
+    "device_map": "auto",
+    "torch_dtype": "float16",
+    "use_fast_tokenizer": false,
+    "verbose": true
+  },
+  "results": {
+    "raw": {
+      "method": "raw",
+      "perplexity": 9.48976993560791,
+      "model_size_mb": 524.5439453125,
+      "model_size_bits": 35201548288,
+      "bits_per_byte": 16.0,
+      "runtime_seconds": 0.8918240070343018,
+      "error": null,
+      "config": {}
+    },
+    "awq": {
+      "method": "awq",
+      "perplexity": 9.488430976867676,
+      "model_size_mb": 133.6972360610962,
+      "model_size_bits": 8972269632.0,
+      "bits_per_byte": 4.078125,
+      "runtime_seconds": 5.062502145767212,
+      "error": null,
+      "config": {
+        "w_bit": 8,
+        "q_group_size": 128,
+        "protect_ratio": 0.01,
+        "scale_factor": 2.0
+      }
+    },
+    "gptq": {
+      "method": "gptq",
+      "perplexity": 9.586357116699219,
+      "model_size_mb": 133.6972360610962,
+      "model_size_bits": 8972269632.0,
+      "bits_per_byte": 4.078125,
+      "runtime_seconds": 22.522505044937134,
+      "error": null,
+      "config": {
+        "w_bit": 8,
+        "q_group_size": 128,
+        "perp_damp": 0.01,
+        "blocksize": 128,
+        "nsamples": 32,
+        "actorder": false
+      }
+    },
+    "pot": {
+      "method": "pot",
+      "perplexity": 11.677058219909668,
+      "model_size_mb": 133.18498611450195,
+      "model_size_bits": 8937893120.0,
+      "bits_per_byte": 4.0625,
+      "runtime_seconds": 40.02058029174805,
+      "error": null,
+      "config": {
+        "w_bit": 8,
+        "q_group_size": 128,
+        "grid_search_range": [
+          0.01,
+          2.01
+        ],
+        "grid_step": 0.1
+      }
+    },
+    "apot": {
+      "method": "apot",
+      "perplexity": 20.884016036987305,
+      "model_size_mb": 133.18498611450195,
+      "model_size_bits": 8937893120.0,
+      "bits_per_byte": 4.0625,
+      "runtime_seconds": 73.57334852218628,
+      "error": null,
+      "config": {
+        "w_bit": 8,
+        "q_group_size": 128,
+        "k": 4,
+        "grid_search_range": [
+          0.01,
+          2.01
+        ],
+        "grid_step": 0.1
+      }
+    }
+  }
+}

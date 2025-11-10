@@ -1,0 +1,138 @@
+{
+  "timestamp": "2025-11-10T15:53:41.698850",
+  "config": {
+    "model_name": "TinyLlama/TinyLlama_v1.1",
+    "quantization_methods": [
+      "raw",
+      "awq",
+      "gptq",
+      "pot",
+      "apot"
+    ],
+    "calibration_dataset": "wikitext",
+    "calibration_dataset_config": "wikitext-2-raw-v1",
+    "calibration_split": "validation",
+    "test_dataset": "wikitext",
+    "test_dataset_config": "wikitext-2-raw-v1",
+    "test_split": "test",
+    "n_calibration_samples": 32,
+    "calibration_block_size": 512,
+    "n_test_samples": 10,
+    "test_block_size": 1024,
+    "quantization_config": {
+      "awq": {
+        "w_bit": 4,
+        "q_group_size": 128,
+        "protect_ratio": 0.01,
+        "scale_factor": 2.0
+      },
+      "gptq": {
+        "w_bit": 4,
+        "q_group_size": 128,
+        "perp_damp": 0.01,
+        "blocksize": 128,
+        "nsamples": 32,
+        "actorder": false
+      },
+      "pot": {
+        "w_bit": 4,
+        "q_group_size": 128,
+        "grid_search_range": [
+          0.01,
+          2.01
+        ],
+        "grid_step": 0.1
+      },
+      "apot": {
+        "w_bit": 4,
+        "q_group_size": 128,
+        "k": 2,
+        "grid_search_range": [
+          0.01,
+          2.01
+        ],
+        "grid_step": 0.1
+      }
+    },
+    "device_map": "auto",
+    "torch_dtype": "float16",
+    "use_fast_tokenizer": false,
+    "verbose": true
+  },
+  "results": {
+    "raw": {
+      "method": "raw",
+      "perplexity": 9.48976993560791,
+      "model_size_mb": 524.5439453125,
+      "model_size_bits": 35201548288,
+      "runtime_seconds": null,
+      "error": null,
+      "config": {}
+    },
+    "awq": {
+      "method": "awq",
+      "perplexity": 10.057888984680176,
+      "model_size_mb": 68.12924289703369,
+      "model_size_bits": 4572076096.0,
+      "runtime_seconds": null,
+      "error": null,
+      "config": {
+        "w_bit": 4,
+        "q_group_size": 128,
+        "protect_ratio": 0.01,
+        "scale_factor": 2.0
+      }
+    },
+    "gptq": {
+      "method": "gptq",
+      "perplexity": 14.23322582244873,
+      "model_size_mb": 68.12924289703369,
+      "model_size_bits": 4572076096.0,
+      "runtime_seconds": null,
+      "error": null,
+      "config": {
+        "w_bit": 4,
+        "q_group_size": 128,
+        "perp_damp": 0.01,
+        "blocksize": 128,
+        "nsamples": 32,
+        "actorder": false
+      }
+    },
+    "pot": {
+      "method": "pot",
+      "perplexity": 11.635661125183105,
+      "model_size_mb": 68.12924289703369,
+      "model_size_bits": 4572076096.0,
+      "runtime_seconds": null,
+      "error": null,
+      "config": {
+        "w_bit": 4,
+        "q_group_size": 128,
+        "grid_search_range": [
+          0.01,
+          2.01
+        ],
+        "grid_step": 0.1
+      }
+    },
+    "apot": {
+      "method": "apot",
+      "perplexity": null,
+      "model_size_mb": null,
+      "model_size_bits": null,
+      "runtime_seconds": null,
+      "error": "CUDA out of memory. Tried to allocate 7.57 GiB. GPU 1 has a total capacity of 15.57 GiB of which 6.20 GiB is free. Including non-PyTorch memory, this process has 9.37 GiB memory in use. Of the allocated memory 8.93 GiB is allocated by PyTorch, and 252.92 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)",
+      "config": {
+        "w_bit": 4,
+        "q_group_size": 128,
+        "k": 2,
+        "grid_search_range": [
+          0.01,
+          2.01
+        ],
+        "grid_step": 0.1
+      }
+    }
+  }
+}
