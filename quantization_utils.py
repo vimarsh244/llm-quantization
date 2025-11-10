@@ -104,7 +104,7 @@ def unload_model(model: Optional[nn.Module] = None) -> None:
 def get_calibration_dataset(
     tokenizer: Any,
     dataset_name: str,
-    dataset_config: str,
+    dataset_config: Optional[str],
     split: str,
     n_samples: int = 256,
     block_size: int = 512
@@ -115,7 +115,7 @@ def get_calibration_dataset(
     Args:
         tokenizer: Model tokenizer
         dataset_name: Dataset identifier (e.g., 'wikitext')
-        dataset_config: Dataset config (e.g., 'wikitext-2-raw-v1')
+        dataset_config: Dataset config (e.g., 'wikitext-2-raw-v1'), or None if no config
         split: Dataset split (e.g., 'validation', 'train')
         n_samples: Number of samples to use
         block_size: Sequence block size
@@ -123,8 +123,12 @@ def get_calibration_dataset(
     Returns:
         List of tokenized tensors
     """
-    print(f"Loading {dataset_name} dataset ({dataset_config}, {split} split)...")
-    dataset = load_dataset(dataset_name, dataset_config, split=split)
+    config_str = dataset_config if dataset_config is not None else "default"
+    print(f"Loading {dataset_name} dataset ({config_str}, {split} split)...")
+    if dataset_config is None:
+        dataset = load_dataset(dataset_name, split=split)
+    else:
+        dataset = load_dataset(dataset_name, dataset_config, split=split)
     dataset = dataset.shuffle(seed=42)
     
     samples = []

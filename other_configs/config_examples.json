@@ -50,8 +50,8 @@
     },
     "comprehensive_benchmark": {
       "description": "Full benchmark on OPT-1.3B (30+ min)",
-      "model_name": "facebook/opt-1.3b",
-      "quantization_methods": ["raw", "awq", "gptq", "pot", "apot"],
+      "model_name": "TinyLlama/TinyLlama_v1.1",
+      "quantization_methods": ["raw", "awq", "gptq", "pot", "apot", "smoothquant"],
       "calibration_dataset": "wikitext",
       "calibration_dataset_config": "wikitext-2-raw-v1",
       "calibration_split": "validation",
@@ -89,6 +89,11 @@
           "k": 2,
           "grid_search_range": [0.01, 2.01],
           "grid_step": 0.05
+        },
+        "smoothquant": {
+          "w_bit": 4,
+          "q_group_size": 128,
+          "alpha": 0.5
         }
       },
       "device_map": "auto",

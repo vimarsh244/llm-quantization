@@ -33,6 +33,10 @@ from pot_apot_quantizer import (
     pot_quantize_model_weight,
     apot_quantize_model_weight,
 )
+from smooth_quant_quantizer import (
+    collect_act_scales,
+    smoothquant_quantize_model_weight,
+)
 
 
 # ==============================================================================
@@ -563,6 +567,94 @@ class QuantizationBenchmark:
         self.results['apot'] = result
         return result
     
+    def benchmark_smoothquant(self):
+        """Benchmark SmoothQuant quantization."""
+        if 'smoothquant' not in self.config['quantization_methods']:
+            return None
+        
+        self.log("\n" + "=" * 80)
+        self.log("BENCHMARKING SMOOTHQUANT")
+        self.log("=" * 80)
+        
+        result = BenchmarkResult("smoothquant", self.config['quantization_config']['smoothquant'])
+        
+        try:
+            start_time = time.time()
+            
+            # clean up memory before loading fresh model
+            self.cleanup_memory()
+            unload_model(self.model)
+            self.model = None
+            
+            # load fresh model
+            self.model, self.tokenizer = load_model_and_tokenizer(
+                self.config['model_name'],
+                device_map=self.config.get('device_map', 'auto'),
+                torch_dtype=self.config.get('torch_dtype', None),
+                use_fast_tokenizer=self.config.get('use_fast_tokenizer', False),
+            )
+            
+            # Apply SmoothQuant quantization
+            self.log("\nApplying SmoothQuant quantization...")
+            config = self.config['quantization_config']['smoothquant']
+            
+            # collect activation scales
+            self.log("Collecting activation scales...")
+            act_scales = collect_act_scales(
+                self.model,
+                self.calib_samples,
+                verbose=self.verbose
+            )
+            
+            # apply quantization with smoothing
+            smoothquant_quantize_model_weight(
+                self.model,
+                w_bit=config['w_bit'],
+                q_group_size=config['q_group_size'],
+                act_scales=act_scales,
+                alpha=config.get('alpha', 0.5),
+                verbose=self.verbose
+            )
+            
+            # Evaluate
+            self.log("Calculating SmoothQuant perplexity...")
+            perplexity = evaluate_perplexity(
+                self.model,
+                self.tokenizer,
+                self.test_dataset,
+                n_samples=self.config.get('n_test_samples', 40),
+                block_size=self.config.get('test_block_size', 2048),
+                verbose=self.verbose
+            )
+            
+            model_size = get_model_size(
+                self.model,
+                data_width=config['w_bit'],
+                group_size=config['q_group_size'],
+                use_zero_point=False  # SmoothQuant uses symmetric quantization (no zero point)
+            )
+            
+            original_size_bytes = self._get_original_model_size_bytes()
+            bits_per_byte = model_size / original_size_bytes if original_size_bytes > 0 else None
+            runtime = time.time() - start_time
+            
+            result.perplexity = perplexity
+            result.model_size_bits = model_size
+            result.model_size_mb = model_size / (8 * MiB)
+            result.bits_per_byte = bits_per_byte
+            result.runtime_seconds = runtime
+            
+            self.log(f"✓ SmoothQuant - Perplexity: {perplexity:.2f}, Size: {model_size / (8 * MiB):.2f} MB, Bits/Byte: {bits_per_byte:.2f}, Time: {runtime:.2f}s")
+            
+        except Exception as e:
+            result.error = str(e)
+            self.log(f"✗ SmoothQuant - Error: {e}")
+            import traceback
+            traceback.print_exc()
+        
+        self.results['smoothquant'] = result
+        return result
+    
     def run_all_benchmarks(self):
         """Run all benchmarks specified in config."""
         self.setup()
@@ -582,6 +674,9 @@ class QuantizationBenchmark:
         
         if 'apot' in self.config['quantization_methods']:
             self.benchmark_apot()
+        
+        if 'smoothquant' in self.config['quantization_methods']:
+            self.benchmark_smoothquant()
         
         # Print summary
         self.print_summary()

@@ -1,13 +1,9 @@
 {
-  "timestamp": "2025-11-10T17:38:25.354277",
+  "timestamp": "2025-11-10T18:31:46.040243",
   "config": {
-    "model_name": "facebook/opt-350m",
+    "model_name": "TinyLlama/TinyLlama_v1.1",
     "quantization_methods": [
-      "raw",
-      "awq",
-      "gptq",
-      "pot",
-      "apot"
+      "smoothquant"
     ],
     "calibration_dataset": "wikitext",
     "calibration_dataset_config": "wikitext-2-raw-v1",
@@ -15,43 +11,48 @@
     "test_dataset": "wikitext",
     "test_dataset_config": "wikitext-2-raw-v1",
     "test_split": "test",
-    "n_calibration_samples": 128,
+    "n_calibration_samples": 256,
     "calibration_block_size": 512,
-    "n_test_samples": 20,
-    "test_block_size": 1024,
+    "n_test_samples": 40,
+    "test_block_size": 2048,
     "quantization_config": {
       "awq": {
-        "w_bit": 2,
-        "q_group_size": 64,
+        "w_bit": 3,
+        "q_group_size": 128,
         "protect_ratio": 0.01,
         "scale_factor": 2.0
       },
       "gptq": {
-        "w_bit": 2,
-        "q_group_size": 64,
+        "w_bit": 4,
+        "q_group_size": 128,
         "perp_damp": 0.01,
         "blocksize": 128,
         "nsamples": 128,
         "actorder": false
       },
       "pot": {
-        "w_bit": 2,
-        "q_group_size": 64,
+        "w_bit": 4,
+        "q_group_size": 128,
+        "grid_search_range": [
+          0.01,
+          2.01
+        ],
+        "grid_step": 0.01
+      },
+      "apot": {
+        "w_bit": 4,
+        "q_group_size": 128,
+        "k": 2,
         "grid_search_range": [
           0.01,
           2.01
         ],
         "grid_step": 0.05
       },
-      "apot": {
-        "w_bit": 2,
-        "q_group_size": 64,
-        "k": 1,
-        "grid_search_range": [
-          0.01,
-          2.01
-        ],
-        "grid_step": 0.05
+      "smoothquant": {
+        "w_bit": 8,
+        "q_group_size": 128,
+        "alpha": 0.85
       }
     },
     "device_map": "auto",
@@ -62,81 +63,26 @@
   "results": {
     "raw": {
       "method": "raw",
-      "perplexity": 26.66453742980957,
-      "model_size_mb": 157.9267578125,
-      "model_size_bits": 10598285312,
+      "perplexity": 8.162983894348145,
+      "model_size_mb": 524.5439453125,
+      "model_size_bits": 35201548288,
       "bits_per_byte": 16.0,
-      "runtime_seconds": 0.68406081199646,
+      "runtime_seconds": 11.147801160812378,
       "error": null,
       "config": {}
     },
-    "awq": {
-      "method": "awq",
-      "perplexity": 112091.890625,
-      "model_size_mb": 11.412675857543945,
-      "model_size_bits": 765891712.0,
-      "bits_per_byte": 1.15625,
-      "runtime_seconds": 3.3046693801879883,
+    "smoothquant": {
+      "method": "smoothquant",
+      "perplexity": 54.132904052734375,
+      "model_size_mb": 133.18498611450195,
+      "model_size_bits": 8937893120.0,
+      "bits_per_byte": 4.0625,
+      "runtime_seconds": 23.10360312461853,
       "error": null,
       "config": {
-        "w_bit": 2,
-        "q_group_size": 64,
-        "protect_ratio": 0.01,
-        "scale_factor": 2.0
-      }
-    },
-    "gptq": {
-      "method": "gptq",
-      "perplexity": 2745.95654296875,
-      "model_size_mb": 11.412675857543945,
-      "model_size_bits": 765891712.0,
-      "bits_per_byte": 1.15625,
-      "runtime_seconds": 13.632306575775146,
-      "error": null,
-      "config": {
-        "w_bit": 2,
-        "q_group_size": 64,
-        "perp_damp": 0.01,
-        "blocksize": 128,
-        "nsamples": 128,
-        "actorder": false
-      }
-    },
-    "pot": {
-      "method": "pot",
-      "perplexity": 20994.50390625,
-      "model_size_mb": 11.104225158691406,
-      "model_size_bits": 745191936.0,
-      "bits_per_byte": 1.125,
-      "runtime_seconds": 9.382635831832886,
-      "error": null,
-      "config": {
-        "w_bit": 2,
-        "q_group_size": 64,
-        "grid_search_range": [
-          0.01,
-          2.01
-        ],
-        "grid_step": 0.05
-      }
-    },
-    "apot": {
-      "method": "apot",
-      "perplexity": 86.36128997802734,
-      "model_size_mb": 11.104225158691406,
-      "model_size_bits": 745191936.0,
-      "bits_per_byte": 1.125,
-      "runtime_seconds": 14.860884666442871,
-      "error": null,
-      "config": {
-        "w_bit": 2,
-        "q_group_size": 64,
-        "k": 1,
-        "grid_search_range": [
-          0.01,
-          2.01
-        ],
-        "grid_step": 0.05
+        "w_bit": 8,
+        "q_group_size": 128,
+        "alpha": 0.85
       }
     }
   }

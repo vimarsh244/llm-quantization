@@ -1,60 +1,56 @@
 {
   "model_name": "TinyLlama/TinyLlama_v1.1",
   "quantization_methods": [
-    "awq",
-    "gptq",
-    "pot",
-    "apot",
     "smoothquant"
   ],
-  "calibration_dataset": "mit-han-lab/pile-val-backup",
-  "calibration_dataset_config": null,
+  "calibration_dataset": "wikitext",
+  "calibration_dataset_config": "wikitext-2-raw-v1",
   "calibration_split": "validation",
-  "test_dataset": "mit-han-lab/pile-val-backup",
-  "test_dataset_config": null,
-  "test_split": "validation",
-  "n_calibration_samples": 128,
+  "test_dataset": "wikitext",
+  "test_dataset_config": "wikitext-2-raw-v1",
+  "test_split": "test",
+  "n_calibration_samples": 256,
   "calibration_block_size": 512,
-  "n_test_samples": 20,
-  "test_block_size": 1024,
+  "n_test_samples": 40,
+  "test_block_size": 2048,
   "quantization_config": {
     "awq": {
-      "w_bit": 8,
+      "w_bit": 3,
       "q_group_size": 128,
       "protect_ratio": 0.01,
       "scale_factor": 2.0
     },
     "gptq": {
-      "w_bit": 8,
+      "w_bit": 4,
       "q_group_size": 128,
       "perp_damp": 0.01,
       "blocksize": 128,
-      "nsamples": 32,
+      "nsamples": 128,
       "actorder": false
     },
     "pot": {
-      "w_bit": 8,
+      "w_bit": 4,
       "q_group_size": 128,
       "grid_search_range": [
         0.01,
         2.01
       ],
-      "grid_step": 0.1
+      "grid_step": 0.01
     },
     "apot": {
-      "w_bit": 8,
+      "w_bit": 4,
       "q_group_size": 128,
       "k": 2,
       "grid_search_range": [
         0.01,
         2.01
       ],
-      "grid_step": 0.1
+      "grid_step": 0.05
     },
     "smoothquant": {
       "w_bit": 8,
       "q_group_size": 128,
-      "alpha": 0.5
+      "alpha": 0.85
     }
   },
   "device_map": "auto",

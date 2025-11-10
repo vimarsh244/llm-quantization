@@ -8,6 +8,16 @@ python benchmark_runner.py config.json
 # saves restults in benchmark_results.json 
 ```
 
+### quantization methods
+
+the framework includes the following quantization methods:
+
+- awq
+- gptq
+- pot
+- apot
+- smoothquant
+
 ### other useful
 
 - list configs

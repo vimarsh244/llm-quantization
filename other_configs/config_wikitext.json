@@ -4,7 +4,8 @@
     "awq",
     "gptq",
     "pot",
-    "apot"
+    "apot",
+    "smoothquant"
   ],
   "calibration_dataset": "wikitext",
   "calibration_dataset_config": "wikitext-2-raw-v1",
@@ -49,6 +50,11 @@
         2.01
       ],
       "grid_step": 0.1
+    },
+    "smoothquant": {
+      "w_bit": 4,
+      "q_group_size": 128,
+      "alpha": 0.5
     }
   },
   "device_map": "auto",
