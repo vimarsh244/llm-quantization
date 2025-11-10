@@ -1,56 +1,0 @@
-Loading configuration from: config.json
-
-================================================================================
-BENCHMARK SETUP
-================================================================================
-
-Loading model: TinyLlama/TinyLlama_v1.1...
-
-Loading test dataset...
-Loading wikitext test dataset (wikitext-2-raw-v1, test split)...
-  -> Test dataset shape: torch.Size([1, 341469])
-
-Loading calibration dataset...
-Loading wikitext dataset (wikitext-2-raw-v1, validation split)...
-  -> Split into 6 blocks of size 512
-Setup complete!
-
-================================================================================
-EVALUATING RAW MODEL
-================================================================================
-
-Calculating baseline perplexity...
-evaluating perplexity:   0%|          | 0/10 [00:00<?, ?it/s]evaluating perplexity:  10%|█         | 1/10 [00:00<00:01,  4.97it/s]evaluating perplexity:  40%|████      | 4/10 [00:00<00:00, 14.68it/s]evaluating perplexity:  60%|██████    | 6/10 [00:00<00:00, 13.85it/s]evaluating perplexity:  80%|████████  | 8/10 [00:00<00:00, 13.57it/s]evaluating perplexity: 100%|██████████| 10/10 [00:00<00:00, 13.41it/s]evaluating perplexity: 100%|██████████| 10/10 [00:00<00:00, 12.95it/s]
-✓ Raw Model - Perplexity: 9.49, Size: 524.54 MB
-
-================================================================================
-BENCHMARKING ADDITIVE POWER-OF-TWO (APOT)
-================================================================================
-
-Applying APOT quantization...
-Calculating APOT perplexity...
-evaluating perplexity:   0%|          | 0/10 [00:00<?, ?it/s]evaluating perplexity:  30%|███       | 3/10 [00:00<00:00, 27.32it/s]evaluating perplexity:  60%|██████    | 6/10 [00:00<00:00, 16.47it/s]evaluating perplexity:  80%|████████  | 8/10 [00:00<00:00, 15.08it/s]evaluating perplexity: 100%|██████████| 10/10 [00:00<00:00, 14.34it/s]evaluating perplexity: 100%|██████████| 10/10 [00:00<00:00, 15.43it/s]
-✓ APOT - Perplexity: 9.75, Size: 68.13 MB
-
-================================================================================
-BENCHMARK SUMMARY
-================================================================================
-
-Model: TinyLlama/TinyLlama_v1.1
-Calibration: wikitext
-Test Dataset: wikitext
-Timestamp: 2025-11-10 16:06:27
-
---------------------------------------------------------------------------------
-Method       | Perplexity |  Size (MB) | Runtime (s)
---------------------------------------------------------------------------------
-raw          |     9.49 |     524.54 |       0.00
-apot         |     9.75 |      68.13 |       0.00
---------------------------------------------------------------------------------
-
-Improvements vs Raw Model:
-  apot      : PPL + +2.69% | Size -+87.01%
-================================================================================
-
-
-Results saved to benchmark_results.json

@@ -4,6 +4,7 @@ Power-of-Two (POT) and Additive Power-of-Two (APOT) quantization implementations
 Based on papers:
 - POT-PTQ: "Power-of-Two Quantization for Low-Precision Neural Networks"
 - APOT: "Additive Power-of-Two Quantization"
+- POT-PTQ: "PoTPTQ: A Two-step Power-of-Two Post-training for LLMs" 
 
 Key ideas:
 - POT: Restrict scales to powers of two (2^k) for efficient shift operations

@@ -43,7 +43,7 @@
     "apot": {
       "w_bit": 8,
       "q_group_size": 128,
-      "k": 4,
+      "k": 2,
       "grid_search_range": [
         0.01,
         2.01

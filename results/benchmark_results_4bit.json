@@ -1,9 +1,8 @@
 {
-  "timestamp": "2025-11-10T15:53:41.698850",
+  "timestamp": "2025-11-10T17:21:47.348823",
   "config": {
     "model_name": "TinyLlama/TinyLlama_v1.1",
     "quantization_methods": [
-      "raw",
       "awq",
       "gptq",
       "pot",
@@ -65,16 +64,18 @@
       "perplexity": 9.48976993560791,
       "model_size_mb": 524.5439453125,
       "model_size_bits": 35201548288,
-      "runtime_seconds": null,
+      "bits_per_byte": 16.0,
+      "runtime_seconds": 0.8966081142425537,
       "error": null,
       "config": {}
     },
     "awq": {
       "method": "awq",
-      "perplexity": 10.057888984680176,
+      "perplexity": 10.208626747131348,
       "model_size_mb": 68.12924289703369,
       "model_size_bits": 4572076096.0,
-      "runtime_seconds": null,
+      "bits_per_byte": 2.078125,
+      "runtime_seconds": 5.217356443405151,
       "error": null,
       "config": {
         "w_bit": 4,
@@ -88,7 +89,8 @@
       "perplexity": 14.23322582244873,
       "model_size_mb": 68.12924289703369,
       "model_size_bits": 4572076096.0,
-      "runtime_seconds": null,
+      "bits_per_byte": 2.078125,
+      "runtime_seconds": 22.960803270339966,
       "error": null,
       "config": {
         "w_bit": 4,
@@ -101,10 +103,11 @@
     },
     "pot": {
       "method": "pot",
-      "perplexity": 11.635661125183105,
-      "model_size_mb": 68.12924289703369,
-      "model_size_bits": 4572076096.0,
-      "runtime_seconds": null,
+      "perplexity": 11.757268905639648,
+      "model_size_mb": 67.61699295043945,
+      "model_size_bits": 4537699584.0,
+      "bits_per_byte": 2.0625,
+      "runtime_seconds": 39.93527007102966,
       "error": null,
       "config": {
         "w_bit": 4,
@@ -118,11 +121,12 @@
     },
     "apot": {
       "method": "apot",
-      "perplexity": null,
-      "model_size_mb": null,
-      "model_size_bits": null,
-      "runtime_seconds": null,
-      "error": "CUDA out of memory. Tried to allocate 7.57 GiB. GPU 1 has a total capacity of 15.57 GiB of which 6.20 GiB is free. Including non-PyTorch memory, this process has 9.37 GiB memory in use. Of the allocated memory 8.93 GiB is allocated by PyTorch, and 252.92 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)",
+      "perplexity": 9.745193481445312,
+      "model_size_mb": 67.61699295043945,
+      "model_size_bits": 4537699584.0,
+      "bits_per_byte": 2.0625,
+      "runtime_seconds": 61.58542346954346,
+      "error": null,
       "config": {
         "w_bit": 4,
         "q_group_size": 128,
